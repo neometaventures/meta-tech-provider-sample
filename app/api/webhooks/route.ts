@@ -6,6 +6,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
 import Ably from 'ably';
+import crypto from 'crypto';
 import { sql } from '@vercel/postgres';
 
 import { getAckBotStatus, getAckBotMessage, send } from '@/app/api/beUtils';
@@ -13,7 +14,7 @@ import privateConfig from '@/app/privateConfig';
 
 export const dynamic = 'force-dynamic';
 
-const { fbVerifyToken } = await privateConfig();
+const { fbVerifyToken, fbAppSecret } = await privateConfig();
 
 export async function GET(request: NextRequest) {
   const mode = request.nextUrl.searchParams.get('hub.mode') || '';
@@ -29,7 +30,24 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.json();
+    const rawBody = await request.text();
+
+    if (fbAppSecret) {
+      const signature = request.headers.get('x-hub-signature-256');
+      if (!signature) {
+        console.log('[Webhook] Missing signature header — ignoring unsigned webhook');
+        return NextResponse.json({ status: 'ok' });
+      }
+      const expected = 'sha256=' + crypto.createHmac('sha256', fbAppSecret).update(rawBody).digest('hex');
+      const sigBuf = Buffer.from(signature);
+      const expectedBuf = Buffer.from(expected);
+      if (sigBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(sigBuf, expectedBuf)) {
+        console.log('[Webhook] Signature mismatch — ignoring webhook from unknown app');
+        return NextResponse.json({ status: 'ok' });
+      }
+    }
+
+    const data = JSON.parse(rawBody);
     const { ablyKey } = await privateConfig();
 
     const ably = new Ably.Realtime({ key: ablyKey, clientId: 'webhook_server' });
