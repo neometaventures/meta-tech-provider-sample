@@ -268,7 +268,7 @@ const VERSION_TIP = (
       { name: 'v3', desc: 'Similar to v2 without forks. Adds app-only feature flag and removes proxy sharing.' },
       { name: 'v3-public-preview', desc: 'Reveals Unified Onboarding UI for Cloud API onboarding.' },
       { name: 'v3-alpha-1', desc: 'Alpha release with expanded Unified Onboarding for select partners/products.' },
-      { name: 'v4-public-preview (Testing only)', desc: 'Preview version of v4 for testing and feedback.' },
+      { name: 'v4-public-preview', desc: 'Preview version of v4 with Unified Onboarding UI for testing and feedback.' },
       { name: 'v4 (Recommended for production)', desc: 'Latest major release with enhanced features.' },
     ]}
     docLink={{
@@ -873,11 +873,9 @@ export default function ClientDashboard({
                   value={esOptionVersion}
                   onChange={(e) => setVer(e.target.value)}
                 >
-                  {publicEsVersions
-                    .filter((v) => !['v3-alpha-1', 'v4-public-preview'].includes(v))
-                    .map((v: string) => (
+                  {publicEsVersions.map((v: string) => (
                       <option key={v} value={v}>
-                        {v === 'v4' ? 'v4 (Recommended for production)' : v}
+                        {v}
                       </option>
                     ))}
                 </SelectField>
