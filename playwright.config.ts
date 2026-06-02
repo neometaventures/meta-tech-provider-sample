@@ -4,6 +4,16 @@
 // LICENSE file in the root directory of this source tree.
 
 import { defineConfig, devices } from '@playwright/test';
+import {getBaseUrl} from '../../libs/playwright/src';
+import * as path from 'path';
+
+const appDir = path.resolve(__dirname);
+
+// getBaseUrl handles all environments:
+// 1. PLAYWRIGHT_BASE_URL env var (deployed previews)
+// 2. NEST_APP_SERVER env var (CI via Buck's nest_app_resource_provider)
+// 3. Local dev server (hostname + port from .next/dev/status.json)
+const baseURL = getBaseUrl(appDir);
 
 export default defineConfig({
   testDir: 'tests/e2e',
@@ -13,7 +23,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL,
     trace: 'on-first-retry',
   },
   projects: [
@@ -24,7 +34,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run build && npm start',
-    url: 'http://localhost:3000',
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
   },
 });
