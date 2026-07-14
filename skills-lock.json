@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "suggest-lucide-icons": {
+      "source": "nweii/agent-stuff",
+      "sourceType": "github",
+      "skillPath": "skills/suggest-lucide-icons/SKILL.md",
+      "computedHash": "79587018092439eff0071844740bc71a966caa7dc3c9ee13d59246dfae3590f4"
+    }
+  }
+}

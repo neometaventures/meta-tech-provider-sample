@@ -3,7 +3,7 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-import { ExternalLink, Instagram } from 'lucide-react';
+import { CircleFadingPlus, ExternalLink } from 'lucide-react';
 
 interface InstagramAccountCardProps {
   id: string;
@@ -18,7 +18,7 @@ export default function InstagramAccountCard({ id, name }: InstagramAccountCardP
     <div className="bg-white border border-gray-200 rounded-xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start gap-4 flex-1 min-w-0">
         <div className="w-9 h-9 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
-          <Instagram className="w-4.5 h-4.5 text-pink-600" />
+          <CircleFadingPlus className="w-4.5 h-4.5 text-pink-600" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-semibold text-gray-900 truncate">{name}</h3>

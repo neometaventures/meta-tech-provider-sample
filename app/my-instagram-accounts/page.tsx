@@ -3,7 +3,7 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-import { Instagram } from 'lucide-react';
+import { CircleFadingPlus } from 'lucide-react';
 
 import { auth0 } from '@/lib/auth0';
 import { getInstagramAccounts, getAppDetails } from '@/app/api/beUtils';
@@ -31,7 +31,7 @@ export default async function MyInstagramAccounts() {
       isEmpty={accounts.length === 0}
       emptyMessage="No Instagram accounts found."
       emptyDescription="Instagram accounts will appear here once they are connected through the Embedded Signup flow."
-      icon={<Instagram className="w-10 h-10" />}
+      icon={<CircleFadingPlus className="w-10 h-10" />}
     >
       {accounts.map((account: InstagramAccountWithDetails) => (
         <InstagramAccountCard

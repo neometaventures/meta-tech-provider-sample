@@ -18,7 +18,8 @@ import {
   Megaphone,
   Database,
   BookOpen,
-  Instagram, Mail,
+  CircleFadingPlus,
+  Mail,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -82,7 +83,7 @@ const navSections = [
         label: 'My Instagram Accounts',
         description: 'View all your Instagram Accounts',
         href: '/my-instagram-accounts',
-        Icon: Instagram,
+        Icon: CircleFadingPlus,
       },
     ],
   },

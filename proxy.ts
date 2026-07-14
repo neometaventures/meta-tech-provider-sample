@@ -7,7 +7,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 import { auth0 } from '@/lib/auth0';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Bypass Auth0 for local development only
   if (process.env.BYPASS_AUTH === 'true' && process.env.NODE_ENV === 'development') {
     return NextResponse.next();
